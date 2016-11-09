@@ -52,4 +52,4 @@ gulp.task("live", function() {
 });
 
 gulp.task("all", ["coffee", "concat", "compass"]);
-gulp.task("default", ["coffee", "concat", "compass"]);
+gulp.task("default", ["coffee", "concat", "compass","live"]);
