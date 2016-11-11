@@ -9,6 +9,7 @@ var gulp = require("gulp"),
     ifElse = require("gulp-if-else");
     gulpIf = require("gulp-if");
     uglify = require("gulp-uglify");
+    minifyHTML = require("gulp-minify-html");
 
 var env,
     coffeeSources,
@@ -91,7 +92,9 @@ gulp.task("connect",function() {
 
 gulp.task("html",function() {
     
-    gulp.src(htmlSources)
+    gulp.src("builds/development/*.html")
+    .pipe(gulpIf(env === "production", minifyHTML()))
+    .pipe(gulpIf(env === "production", gulp.dest(outputDir)))
     .pipe(connect.reload());
 
 });
@@ -108,7 +111,7 @@ gulp.task("watch", function() {
     gulp.watch(coffeeSources, ["coffee"]);
     gulp.watch(jsSources, ["concat"]);
     gulp.watch("components/sass/*.scss", ["compass"]);
-    gulp.watch(htmlSources, ["html"]);
+    gulp.watch("builds/development/*.html", ["html"]);
     gulp.watch(jsonSources, ["json"]);
 
 });
